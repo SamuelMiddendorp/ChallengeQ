@@ -1,0 +1,29 @@
+<script lang="ts">
+    import { onMount } from "svelte";
+    import { messageStore, sendMessage } from "../stores/WebSocketStore";
+
+    let message: string;
+	let messages: string[] = [];
+
+	onMount(() => {
+		messageStore.subscribe(currentMessage => {
+				messages = [...messages, currentMessage];
+		})
+	})
+	
+	function onSendMessage() {
+		 if (message.length > 0) {
+			 sendMessage(message);
+			 message = "";
+		 }
+	}
+</script>
+<body>
+<input type="text" bind:value={message} />
+<button on:click={onSendMessage}>
+	Send Message
+</button>
+{#each messages as message}
+    {message}
+{/each}
+</body>
