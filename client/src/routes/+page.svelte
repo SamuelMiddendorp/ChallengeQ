@@ -1,9 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { messageStore, sendMessage } from "../stores/WebSocketStore";
+    import { messageStore, sendMessage, type Message } from "../stores/WebSocketStore";
 
     let message: string;
-	let messages: string[] = [];
+	let messages: Message[] = [];
 
 	onMount(() => {
 		messageStore.subscribe(currentMessage => {
@@ -24,6 +24,8 @@
 	Send Message
 </button>
 {#each messages as message}
-    {message}
+    <h2>{message.userId}</h2>
+	<p>{message.message}</p>
+
 {/each}
 </body>

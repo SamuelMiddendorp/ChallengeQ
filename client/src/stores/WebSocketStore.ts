@@ -1,8 +1,11 @@
 import { browser } from '$app/environment';
-import { writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 
-
-export const messageStore = writable('');
+export interface Message{
+    userId: string,
+    message: string
+}
+export const messageStore: Writable<Message> = writable({userId: '', message: ''});
 export let sendMessage = (message: string) => { };
 
 // Connect locally only if store is in browser
@@ -13,7 +16,10 @@ export let sendMessage = (message: string) => { };
     });
 
     socket?.addEventListener('message', function (event) {
-        messageStore.set(event.data);
+        console.log("Message received")
+        let data = JSON.parse(event.data);
+        console.log(data);
+        messageStore.set({userId: data.id, message: data.message});
     });
     sendMessage = (message: string) => {
         if (socket!.readyState <= 1) {
