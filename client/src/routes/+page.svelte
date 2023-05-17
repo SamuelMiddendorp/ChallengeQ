@@ -3,6 +3,7 @@
     import { messageStore, sendMessage, type Message } from "../stores/WebSocketStore";
 
     let message: string;
+	let userName: string;
 	let messages: Message[] = [];
 
 	onMount(() => {
@@ -13,12 +14,13 @@
 	
 	function onSendMessage() {
 		 if (message.length > 0) {
-			 sendMessage(message);
+			 sendMessage({message: message, userId: userName});
 			 message = "";
 		 }
 	}
 </script>
 <body>
+<input type="text" bind:value={userName} />
 <input type="text" bind:value={message} />
 <button on:click={onSendMessage}>
 	Send Message

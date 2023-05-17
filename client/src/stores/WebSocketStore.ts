@@ -6,7 +6,7 @@ export interface Message{
     message: string
 }
 export const messageStore: Writable<Message> = writable({userId: '', message: ''});
-export let sendMessage = (message: string) => { };
+export let sendMessage = (message: Message) => { };
 
 // Connect locally only if store is in browser
     const socket = browser ? new WebSocket('ws://localhost:3000') : null;
@@ -17,13 +17,13 @@ export let sendMessage = (message: string) => { };
 
     socket?.addEventListener('message', function (event) {
         console.log("Message received")
+        console.log(event);
         let data = JSON.parse(event.data);
-        console.log(data);
         messageStore.set({userId: data.id, message: data.message});
     });
-    sendMessage = (message: string) => {
+    sendMessage = (message: Message) => {
         if (socket!.readyState <= 1) {
-            socket?.send(message);
+            socket?.send(JSON.stringify(message));
         }
     }
 
