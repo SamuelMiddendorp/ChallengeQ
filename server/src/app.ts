@@ -18,8 +18,8 @@ playersWss.on('connection', function connection(ws) {
 	playerStates[userId] = [];
 
 	ws.onmessage = (message: any) => {
-
 		let data = JSON.parse(message.data);
+		console.log(message.data);
 		userMap.set(userId, data.userId)
 		playerStates[userId] = [...playerStates[userId], data.message] 
 
