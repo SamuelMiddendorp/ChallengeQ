@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { messageStore, sendMessage, type Message } from "../stores/WebSocketStore";
+    import { messageStore, sendMessage, type Message } from "../stores/PlayerWebSocketStore";
 
     let message: string;
 	let userName: string;

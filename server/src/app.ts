@@ -13,11 +13,17 @@ const userMap = new Map();
 const playerStates: any = {};
 
 playersWss.on('connection', function connection(ws) {
+
 	let userId = uuidv4();
+	playerStates[userId] = [];
+
 	ws.onmessage = (message: any) => {
+
 		let data = JSON.parse(message.data);
 		userMap.set(userId, data.userId)
-		updateDashboard(data.message);
+		playerStates[userId] = [...playerStates[userId], data.message] 
+
+		updateDashboard(playerStates);
 	};
 });
 
@@ -31,7 +37,7 @@ const updatePlayers = (message: string, id: string) => {
 const updateDashboard = (playerStates: any) => {
 	dashboardWss.clients.forEach(client => {
 		if (client.readyState === WebSocket.OPEN) {
-			client.send(JSON.stringify({}));
+			client.send(JSON.stringify(playerStates));
 		}
 	})
 
