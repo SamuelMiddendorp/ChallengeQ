@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { dashBoardStore } from "../../stores/DashboardWebSocketStore";
-
+    import { fade } from "svelte/transition";
     let playerData: any = null;
 
     onMount(() => {
@@ -15,12 +15,12 @@
 <body>
     {#if playerData}
     {#each playerData as [key, value]}
-        <div>
+        <div in:fade out:fade>
             <h1>
                 {key}
             </h1>
             {#each value as message}
-                <h3>{message}</h3>
+                <h3 in:fade>{message}</h3>
             {/each}
         </div>
     {/each}

@@ -34,6 +34,9 @@ const updatePlayers = (message: string, id: string) => {
 		}
 	});
 };
+dashboardWss.on('connection', function connection(ws){
+	ws.send(JSON.stringify(playerStates));
+})
 const updateDashboard = (playerStates: any) => {
 	dashboardWss.clients.forEach(client => {
 		if (client.readyState === WebSocket.OPEN) {
