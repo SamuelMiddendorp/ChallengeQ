@@ -12,17 +12,24 @@
     });
 </script>
 
-<body>
+<div class="message-container">
     {#if playerData}
-    {#each playerData as [key, value]}
-        <div in:fade out:fade>
-            <h1>
-                {key}
-            </h1>
+        {#each playerData as [key, value]}
             {#each value as message}
-                <h3 in:fade>{message}</h3>
+                <div class="message" in:fade out:fade>
+                    <h2 in:fade>{key}</h2>
+                    <h3 in:fade>{message}</h3>
+                </div>
             {/each}
-        </div>
-    {/each}
+        {/each}
     {/if}
-</body>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+    .message-container{
+        font-family: 'Roboto', sans-serif;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    }
+</style>
