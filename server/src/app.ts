@@ -10,7 +10,7 @@ const dashboardWss = new WebSocketServer({
 });
 
 const userMap = new Map(); 
-const playerStates: any = {};
+const playerStates: any = {}
 
 playersWss.on('connection', function connection(ws) {
 
@@ -21,7 +21,10 @@ playersWss.on('connection', function connection(ws) {
 		let data = JSON.parse(message.data);
 		console.log(message.data);
 		userMap.set(userId, data.userId)
-		playerStates[userId] = [...playerStates[userId], data.message] 
+		if(playerStates[userMap.get(userId)] == null){
+			playerStates[userMap.get(userId)] = [];
+		}
+		playerStates[userMap.get(userId)] = [...playerStates[userMap.get(userId)], data.message] 
 
 		updateDashboard(playerStates);
 	};
