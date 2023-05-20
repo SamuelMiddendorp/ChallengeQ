@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { WebSocketServer, WebSocket } from "ws";
+import { readQuestionSetFromFile } from './utils';
 
 const playersWss = new WebSocketServer({
 	port: 3000
@@ -8,7 +9,8 @@ const playersWss = new WebSocketServer({
 const dashboardWss = new WebSocketServer({
 	port: 3001
 });
-
+const questionSet = readQuestionSetFromFile("./questionSets/dotnet.json");
+console.log(questionSet);
 const userMap = new Map(); 
 const playerStates: any = {}
 

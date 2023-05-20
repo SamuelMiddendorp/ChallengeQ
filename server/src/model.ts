@@ -8,14 +8,13 @@ export interface Question{
 
 export interface QuestionSet{
     name: string,
-    questions: Question[],
-    id: string
+    questions: Question[]
 }
 
 export interface UserState{
     userName: string,
     points: number,
-    currentQuestionId: string,
+    currentQuestion: number
 }
 
 export interface Scoreboard{
