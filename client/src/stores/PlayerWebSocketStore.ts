@@ -26,4 +26,3 @@ export let sendMessage = (message: Message) => { };
             socket?.send(JSON.stringify(message));
         }
     }
-
