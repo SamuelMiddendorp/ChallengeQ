@@ -1,6 +1,9 @@
+import { match } from 'assert';
 import { v4 as uuidv4 } from 'uuid';
 import { WebSocketServer, WebSocket } from "ws";
-import { readQuestionSetFromFile } from './utils';
+import { mapToQuestionResponse } from './mappers';
+import { AnswerResponse, PlayerState, UserDetailsResponse } from './model';
+import { matchResponse, readQuestionSetFromFile } from './utils';
 
 const playersWss = new WebSocketServer({
 	port: 3000
@@ -10,35 +13,36 @@ const dashboardWss = new WebSocketServer({
 	port: 3001
 });
 const questionSet = readQuestionSetFromFile("./questionSets/dotnet.json");
-console.log(questionSet);
-const userMap = new Map(); 
-const playerStates: any = {}
+
+const playerStates: Map<string, PlayerState> = new Map();
 
 playersWss.on('connection', function connection(ws) {
 
 	let userId = uuidv4();
-	playerStates[userId] = [];
+	playerStates.set(userId, {
+		usernameSet: false,
+		username: "",
+		points: 0,
+		currentQuestion: 0
+	})	
 
 	ws.onmessage = (message: any) => {
-		let data = JSON.parse(message.data);
-		console.log(message.data);
-		userMap.set(userId, data.userId)
-		if(playerStates[userMap.get(userId)] == null){
-			playerStates[userMap.get(userId)] = [];
-		}
-		playerStates[userMap.get(userId)] = [...playerStates[userMap.get(userId)], data.message] 
+		let currentPlayerState = playerStates.get(userId)!;
+		let data: AnswerResponse | UserDetailsResponse = JSON.parse(message.data);
+		matchResponse(data, 
+			(response: AnswerResponse) => {
+				console.log(response);
+			},
+			(response: UserDetailsResponse) => {
+				currentPlayerState.username = response.username;
+				currentPlayerState.usernameSet = true;
+				playerStates.set(userId, currentPlayerState);				
+				ws.send(JSON.stringify(mapToQuestionResponse(questionSet.questions[0])));				
+			});
 
 		updateDashboard(playerStates);
 	};
 });
-
-const updatePlayers = (message: string, id: string) => {
-	playersWss.clients.forEach(function each(client) {
-		if (client.readyState === WebSocket.OPEN) {
-			client.send(JSON.stringify({message: message, id: id}));
-		}
-	});
-};
 dashboardWss.on('connection', function connection(ws){
 	ws.send(JSON.stringify(playerStates));
 })

@@ -1,8 +1,15 @@
-import { UserState } from "./model";
+import { PlayerState, Question, QuestionRequest, ScoreboardEntry } from "./model";
 
-export const mapToScoreBoardEntry = (userState: UserState) => {
+export const mapToScoreBoardEntry = (userState: PlayerState) : ScoreboardEntry => {
     return {
-        userName: userState.userName,
+        username: userState.username,
         points: userState.points
     };
+}
+export const mapToQuestionResponse = (question: Question) : QuestionRequest => {
+    return {
+        name: question.name,
+        description: question.description,
+        answers: question.answers
+    }
 }
