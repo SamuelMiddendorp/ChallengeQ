@@ -18,7 +18,7 @@
         {#each playerData.players as player}
                 <div class="message" in:fade out:fade>
                     <h2>{player.username}</h2>
-                    <h3>{player.points}</h3>
+                    {#key player.points}<h3 in:fade>{player.points}</h3>{/key}
                 </div>
         {/each}
     {/if}

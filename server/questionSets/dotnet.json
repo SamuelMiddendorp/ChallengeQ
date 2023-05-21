@@ -11,6 +11,30 @@
                     "secret-4": "54"
             },
         "correctAnswer": "secret3",
+        "points": 5
+        },
+        {
+            "name": "dotnet-2",
+            "description": "What is the correct answer",
+            "answers": {
+                    "secret-1": "20",
+                    "secret-2": "40",
+                    "secret-3": "42",
+                    "secret-4": "54"
+            },
+        "correctAnswer": "secret3",
+        "points": 10
+        },
+        {
+            "name": "dotnet-3",
+            "description": "What is the correct answer",
+            "answers": {
+                    "secret-1": "20",
+                    "secret-2": "40",
+                    "secret-3": "42",
+                    "secret-4": "54"
+            },
+        "correctAnswer": "secret3",
         "points": 20
         }
     ]

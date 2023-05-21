@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import type { QuestionRequest } from "../lib/contract";
     import { questionStore, sendAnswer, sendUserName } from "../stores/PlayerWebSocketStore";
+    import { fade } from "svelte/transition";
 
 	let userName: string;
 	let userNameSet = false;
@@ -31,7 +32,7 @@
 <!-- For now we render the question on the same page, WIP-->
 {#if question}
 <div class="question">
-	<h2>{question.name}</h2>
+	{#key question.name}<h2>{question.name}</h2>{/key}
 	<p>{question.description}</p>
 	<ul>
 		{#each Object.entries(question.answers) as [answerSecret, answer]}

@@ -32,11 +32,22 @@ playersWss.on('connection', function connection(ws) {
 		let data: AnswerResponse | UserDetailsResponse = JSON.parse(message.data);
 		matchResponse(data,
 			(response: AnswerResponse) => {
-				console.log(response);
+				/// Assign points
+				let questionPoints = questionSet.questions[currentPlayerState.currentQuestion].points;
+				currentPlayerState.points += questionPoints;
+				if (currentPlayerState.currentQuestion < questionSet.questions.length - 1) {
+					// Set next question as active
+					currentPlayerState.currentQuestion += 1;
+				}
+				// Update global state
+				playerStates.set(userId, currentPlayerState);
+				// Send new question
+				ws.send(JSON.stringify(mapToQuestionResponse(questionSet.questions[currentPlayerState.currentQuestion])))
 			},
 			(response: UserDetailsResponse) => {
 				currentPlayerState.username = response.username;
 				currentPlayerState.usernameSet = true;
+				currentPlayerState.currentQuestion = 0;
 				playerStates.set(userId, currentPlayerState);
 				ws.send(JSON.stringify(mapToQuestionResponse(questionSet.questions[0])));
 			});
