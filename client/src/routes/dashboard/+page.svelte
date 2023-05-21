@@ -2,25 +2,23 @@
     import { onMount } from "svelte";
     import { dashBoardStore } from "../../stores/DashboardWebSocketStore";
     import { fade } from "svelte/transition";
-    let playerData: any = null;
+    import type { Scoreboard } from "../../lib/contract";
+    let playerData: Scoreboard;
 
     onMount(() => {
         dashBoardStore.subscribe((currentData) => {
-            playerData = Object.entries(currentData);
-            console.log(playerData);
+            playerData = currentData;
         });
     });
 </script>
 
 <div class="message-container">
     {#if playerData}
-        {#each playerData as [key, value]}
-            {#each value as message}
+        {#each playerData.players as player}
                 <div class="message" in:fade out:fade>
-                    <h2>{key}</h2>
-                    <h3>{message}</h3>
+                    <h2>{player.username}</h2>
+                    <h3>{player.points}</h3>
                 </div>
-            {/each}
         {/each}
     {/if}
 </div>

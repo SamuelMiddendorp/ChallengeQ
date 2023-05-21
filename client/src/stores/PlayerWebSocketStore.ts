@@ -21,3 +21,9 @@ export const sendUserName = (username: string) => {
         socket?.send(JSON.stringify({username: username}));
     }
 }
+
+export const sendAnswer = (answer: string) => {
+    if (socket!.readyState <= 1) {
+        socket?.send(JSON.stringify({answer: answer}));
+    }
+}
