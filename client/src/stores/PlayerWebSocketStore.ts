@@ -15,7 +15,8 @@ socket?.addEventListener('message', function (event) {
     let data: QuestionRequest = JSON.parse(event.data);
     questionStore.set(data);
 });
-
+// We like the distinction here but these are actually not connected
+// to the store, the socket is integrated into the store.
 export const sendUserName = (username: string) => {
     if (socket!.readyState <= 1) {
         socket?.send(JSON.stringify({username: username}));
