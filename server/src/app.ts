@@ -1,8 +1,8 @@
-import { match } from 'assert';
 import { v4 as uuidv4 } from 'uuid';
 import { WebSocketServer, WebSocket } from "ws";
+import { AnswerResponse, UserDetailsResponse } from './contract';
 import { mapToQuestionResponse } from './mappers';
-import { AnswerResponse, PlayerState, UserDetailsResponse } from './model';
+import { PlayerState } from './model';
 import { matchResponse, readQuestionSetFromFile } from './utils';
 
 const playersWss = new WebSocketServer({

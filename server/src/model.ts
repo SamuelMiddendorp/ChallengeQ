@@ -5,11 +5,6 @@ export interface Question{
     correctAnswer: string
     points: number
 }
-export interface QuestionRequest{
-    name: string,
-    description: string,
-    answers: Map<string, string>,
-}
 
 export interface QuestionSet{
     name: string,
@@ -23,18 +18,3 @@ export interface PlayerState{
     currentQuestion: number
 }
 
-export interface Scoreboard{
-    players: ScoreboardEntry[]
-}
-
-export interface ScoreboardEntry{
-    username: string,
-    points: number
-}
-
-export interface AnswerResponse{
-    answer: string
-}
-export interface UserDetailsResponse{
-    username: string
-}

@@ -1,4 +1,5 @@
-import { PlayerState, Question, QuestionRequest, ScoreboardEntry } from "./model";
+import { QuestionRequest, ScoreboardEntry } from "./contract";
+import { PlayerState, Question } from "./model";
 
 export const mapToScoreBoardEntry = (userState: PlayerState) : ScoreboardEntry => {
     return {
