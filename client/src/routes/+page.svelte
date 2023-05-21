@@ -1,33 +1,26 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { messageStore, sendMessage, type Message } from "../stores/PlayerWebSocketStore";
+    import type { QuestionRequest } from "../lib/contract";
+    import { questionStore, sendUserName } from "../stores/PlayerWebSocketStore";
 
-    let message: string;
 	let userName: string;
-	let messages: Message[] = [];
-
+	let question: QuestionRequest
 	onMount(() => {
-		messageStore.subscribe(currentMessage => {
-				messages = [...messages, currentMessage];
+		questionStore.subscribe(question=> {
+			question = question;
 		})
 	})
 	
 	function onSendMessage() {
-		 if (message.length > 0) {
-			 sendMessage({message: message, userId: userName});
-			 message = "";
-		 }
+		sendUserName(userName);
 	}
 </script>
 <body>
 <input type="text" bind:value={userName} />
-<input type="text" bind:value={message} />
 <button on:click={onSendMessage}>
-	Send Message
+	Join!
 </button>
-{#each messages as message}
-    <h2>{message.userId}</h2>
-	<p>{message.message}</p>
-
-{/each}
+{#if question}
+{question.name}
+{/if}
 </body>
