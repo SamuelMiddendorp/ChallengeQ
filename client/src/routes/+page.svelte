@@ -4,22 +4,26 @@
     import { questionStore, sendUserName } from "../stores/PlayerWebSocketStore";
 
 	let userName: string;
+	let userNameSet = false;
 	let question: QuestionRequest
 	onMount(() => {
-		questionStore.subscribe(question=> {
-			question = question;
+		questionStore.subscribe(questionResponse => {
+			question = questionResponse;
 		})
 	})
 	
 	function onSendMessage() {
 		sendUserName(userName);
+		userNameSet = true;
 	}
 </script>
 <body>
+{#if !userNameSet}
 <input type="text" bind:value={userName} />
 <button on:click={onSendMessage}>
 	Join!
 </button>
+{/if}
 {#if question}
 {question.name}
 {/if}
