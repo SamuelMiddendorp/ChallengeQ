@@ -1,5 +1,6 @@
-import { AnswerResponse, QuestionSet, UserDetailsResponse } from "./model";
+import { QuestionSet} from "./model";
 import * as fs from 'fs';
+import { AnswerResponse, UserDetailsResponse } from "./contract";
 
 export const readQuestionSetFromFile = (fileName: string): QuestionSet => {
     let file = fs.readFileSync(fileName, "utf8");

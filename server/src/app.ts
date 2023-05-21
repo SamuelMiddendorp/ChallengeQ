@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { WebSocketServer, WebSocket } from "ws";
 import { AnswerResponse, UserDetailsResponse } from './contract';
-import { mapToQuestionResponse } from './mappers';
+import { mapToQuestionResponse, mapToScoreboard } from './mappers';
 import { PlayerState } from './model';
 import { matchResponse, readQuestionSetFromFile } from './utils';
 
@@ -24,32 +24,33 @@ playersWss.on('connection', function connection(ws) {
 		username: "",
 		points: 0,
 		currentQuestion: 0
-	})	
+	})
 
 	ws.onmessage = (message: any) => {
+		console.log(message);
 		let currentPlayerState = playerStates.get(userId)!;
 		let data: AnswerResponse | UserDetailsResponse = JSON.parse(message.data);
-		matchResponse(data, 
+		matchResponse(data,
 			(response: AnswerResponse) => {
 				console.log(response);
 			},
 			(response: UserDetailsResponse) => {
 				currentPlayerState.username = response.username;
 				currentPlayerState.usernameSet = true;
-				playerStates.set(userId, currentPlayerState);				
-				ws.send(JSON.stringify(mapToQuestionResponse(questionSet.questions[0])));				
+				playerStates.set(userId, currentPlayerState);
+				ws.send(JSON.stringify(mapToQuestionResponse(questionSet.questions[0])));
 			});
 
-		updateDashboard(playerStates);
+		updateDashboard();
 	};
 });
-dashboardWss.on('connection', function connection(ws){
-	ws.send(JSON.stringify(playerStates));
+dashboardWss.on('connection', function connection(ws) {
+	ws.send(JSON.stringify(mapToScoreboard(playerStates)));
 })
-const updateDashboard = (playerStates: any) => {
+const updateDashboard = () => {
 	dashboardWss.clients.forEach(client => {
 		if (client.readyState === WebSocket.OPEN) {
-			client.send(JSON.stringify(playerStates));
+			client.send(JSON.stringify(mapToScoreboard(playerStates)));
 		}
 	})
 

@@ -7,6 +7,7 @@
 
     onMount(() => {
         dashBoardStore.subscribe((currentData) => {
+            console.log(currentData);
             playerData = currentData;
         });
     });

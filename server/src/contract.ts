@@ -16,7 +16,6 @@ export interface ScoreboardEntry{
 export interface AnswerResponse{
     answer: string
 }
-
 export interface UserDetailsResponse{
     username: string
 }
