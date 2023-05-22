@@ -32,11 +32,16 @@ playersWss.on('connection', function connection(ws) {
 		let data: AnswerResponse | UserDetailsResponse = JSON.parse(message.data);
 		matchResponse(data,
 			(response: AnswerResponse) => {
-				/// Assign points
-				let questionPoints = questionSet.questions[currentPlayerState.currentQuestion].points;
-				currentPlayerState.points += questionPoints;
+				let qeustion = questionSet.questions[currentPlayerState.currentQuestion];
+
+				if (qeustion.correctAnswer == response.answer) {
+					/// Assign points
+					currentPlayerState.points += qeustion.points;
+				}
+
 				if (currentPlayerState.currentQuestion < questionSet.questions.length - 1) {
 					// Set next question as active
+
 					currentPlayerState.currentQuestion += 1;
 				}
 				// Update global state

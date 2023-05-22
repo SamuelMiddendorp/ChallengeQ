@@ -10,7 +10,7 @@
                     "secret-3": "42",
                     "secret-4": "54"
             },
-        "correctAnswer": "secret3",
+        "correctAnswer": "secret-3",
         "points": 5
         },
         {
@@ -22,7 +22,7 @@
                     "secret-3": "42",
                     "secret-4": "54"
             },
-        "correctAnswer": "secret3",
+        "correctAnswer": "secret-3",
         "points": 10
         },
         {
@@ -34,7 +34,7 @@
                     "secret-3": "42",
                     "secret-4": "54"
             },
-        "correctAnswer": "secret3",
+        "correctAnswer": "secret-3",
         "points": 20
         }
     ]
