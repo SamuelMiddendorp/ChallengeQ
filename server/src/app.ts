@@ -25,7 +25,10 @@ playersWss.on('connection', function connection(ws) {
 		points: 0,
 		currentQuestion: 0
 	})
-
+	ws.onclose = () => {
+		playerStates.delete(userId);
+		updateDashboard();
+	}
 	ws.onmessage = (message: any) => {
 		console.log(message);
 		let currentPlayerState = playerStates.get(userId)!;
