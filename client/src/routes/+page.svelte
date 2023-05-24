@@ -18,7 +18,9 @@
 		userNameSet = true;
 	}
 	const onAnswerQuestion = () => {
-		sendAnswer(currentAnswer);
+		if(currentAnswer){
+			sendAnswer(currentAnswer);
+		}
 	}
 </script>
 <body>
@@ -33,9 +35,11 @@
 <div class="question">
 	{#key question.name}<h2>{question.name}</h2>{/key}
 	<p>{question.description}</p>
+		<div class="answers">
 		{#each Object.entries(question.answers) as [answerSecret, answer]}
-			<button on:click={() => currentAnswer = answerSecret}>{answer}</button>
+			<button class:active="{currentAnswer === answerSecret}" on:click={() => currentAnswer = answerSecret}>{answer}</button>
 		{/each}
+		</div>
 		<button on:click={() => onAnswerQuestion()}>Submit!</button> 
 </div>
 {/if}
@@ -60,6 +64,7 @@
 		background-color: #111;	
 	}
 	.question button{
+		transition: all 0.2s ease-in-out;
 		display: block;
 		text-align: left;
 		width: 100%;
@@ -70,5 +75,8 @@
 		background-color: #7300ff;
 		margin-top: 1rem;
 		border-radius: 0.4rem;
+	}
+	.active{
+		background-color: #ad6aff !important;
 	}
 </style>
