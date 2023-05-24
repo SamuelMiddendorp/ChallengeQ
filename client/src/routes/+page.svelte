@@ -56,12 +56,13 @@
         font-family: 'Roboto', sans-serif;
 		display: grid;
 		place-content: center;
+		background-color: #160032;
 	}
 	.question{
-		border-radius: 0.4rem;
-		padding: 1rem;
+		border-radius: 1rem;
+		padding: 2rem;
 		color: #efefef;
-		background-color: #111;	
+		background-color: #40008e;
 	}
 	.question button{
 		transition: all 0.2s ease-in-out;
@@ -75,6 +76,9 @@
 		background-color: #7300ff;
 		margin-top: 1rem;
 		border-radius: 0.4rem;
+	}
+	.question button:hover{
+		background-color: #ad6aff !important;
 	}
 	.active{
 		background-color: #ad6aff !important;
