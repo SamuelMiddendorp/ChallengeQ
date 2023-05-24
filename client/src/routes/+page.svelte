@@ -40,7 +40,7 @@
 			<button class:active="{currentAnswer === answerSecret}" on:click={() => currentAnswer = answerSecret}>{answer}</button>
 		{/each}
 		</div>
-		<button on:click={() => onAnswerQuestion()}>Submit!</button> 
+		<button class="submit" on:click={() => onAnswerQuestion()}>Submit</button> 
 </div>
 {/if}
 </body>
@@ -60,7 +60,7 @@
 	}
 	.question{
 		border-radius: 1rem;
-		padding: 2rem;
+		padding: 1rem;
 		color: #efefef;
 		background-color: #40008e;
 	}
@@ -79,6 +79,11 @@
 	}
 	.question button:hover{
 		background-color: #ad6aff !important;
+	}
+	.submit{
+		text-transform: uppercase;
+		text-align: center !important;
+		margin-top: 2rem !important;
 	}
 	.active{
 		background-color: #ad6aff !important;
