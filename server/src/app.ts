@@ -29,10 +29,10 @@ playersWss.on('connection', function connection(ws) {
 		playerStates.delete(userId);
 		updateDashboard();
 	}
-	ws.onmessage = (message: any) => {
+	ws.onmessage = (message) => {
 		console.log(message);
 		let currentPlayerState = playerStates.get(userId)!;
-		let data: AnswerResponse | UserDetailsResponse = JSON.parse(message.data);
+		let data: AnswerResponse | UserDetailsResponse = JSON.parse(message.data.toString());
 		matchResponse(data,
 			(response: AnswerResponse) => {
 				let qeustion = questionSet.questions[currentPlayerState.currentQuestion];
